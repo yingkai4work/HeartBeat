@@ -33,6 +33,7 @@ export default class SandStoneController {
   public static async verifyToken(ctx: Context): Promise<void> {
     const sandStoneReportModel: SandStoneReportModel = ctx.validatedQuery;
     console.log(sandStoneReportModel);
+    // const histories = await new PrivateJira().getHistories(sandStoneReportModel.cardId);
     ctx.response.body = {
       assigneesWithCycleTime: new PrivateJira().getAssigneesWithCycleTime(
         histories

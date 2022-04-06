@@ -1,6 +1,7 @@
 import { PrivateJiraHistory as History } from "../sand-stone-models/PrivateJiraHistory";
 import { PrivateJiraAssignee as Assignee } from "../sand-stone-models/PrivateJiraAssignee";
 import moment, { Moment } from "moment";
+import axios from "axios";
 
 enum STATUS {
   IN_PROGRESS = "In Progress",
@@ -187,5 +188,10 @@ export class PrivateJira {
     });
 
     return result;
+  }
+
+  async getHistories(cardId: string): Promise<History[]> {
+    const histories = (await axios.get(`https://${cardId}`)).data.changelog;
+    return [];
   }
 }
