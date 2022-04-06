@@ -15,13 +15,13 @@ import {
 import { PrivateJira } from "./sand-stone-service/PrivateJira";
 import { MULTI_ASSIGNEE } from "./sand-stone-samples/multi-assignee";
 import { MULTI_ASSIGNEE2 } from "./sand-stone-samples/multi-assignee2";
-// import { NORMAL } from "./sand-stone-samples/normal";
+import { NORMAL } from "./sand-stone-samples/normal";
 import { REOPEN_NOT_DONE } from "./sand-stone-samples/reopen-not-done";
 
 // const histories = MULTI_ASSIGNEE.changelog.histories;
 // const histories = MULTI_ASSIGNEE2.changelog.histories;
 // const histories = NORMAL.changelog.histories;
-const histories = REOPEN_NOT_DONE.changelog.histories;
+// const histories = REOPEN_NOT_DONE.changelog.histories;
 
 @tagsAll(["KanbanController"])
 export default class SandStoneController {
@@ -33,12 +33,19 @@ export default class SandStoneController {
   public static async verifyToken(ctx: Context): Promise<void> {
     const sandStoneReportModel: SandStoneReportModel = ctx.validatedQuery;
     console.log(sandStoneReportModel);
-    // const histories = await new PrivateJira().getHistories(sandStoneReportModel.cardId);
-    ctx.response.body = {
-      assigneesWithCycleTime: new PrivateJira().getAssigneesWithCycleTime(
-        histories
-      ),
-      reopenRate: new PrivateJira().getReopenRate(histories),
-    };
+    const issues = await new PrivateJira().getIssues(sandStoneReportModel.jql);
+    const res: {}[] = [];
+
+    issues.forEach((issue, index) => {
+      res.push({
+        id: index, // issue.id
+        assigneesWithCycleTime: new PrivateJira().getAssigneesWithCycleTime(
+          issue.changelog.histories
+        ),
+        reopenRate: new PrivateJira().getReopenRate(issue.changelog.histories),
+      });
+    });
+
+    ctx.response.body = res;
   }
 }

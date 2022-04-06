@@ -7,6 +7,8 @@ fileignoreconfig:
   checksum: 2b8b3eca085740a99526e729ad6005d72d91c620c04aba5028770823f39d0a77
 - filename: backend/src/controller/sand-stone-samples/reopen-not-done.ts
   checksum: 9a08119f54244dc3b0174fee97c3748da9d2a51e7a26fbf2f62f929102a98ca3
+- filename: backend/src/controller/sand-stone-service/PrivateJira.ts
+  checksum: afdc3af60846ff9f76b622d30bb647e86c57eecadc40a6f1cdd083cb0070cf6a
 - filename: backend/yarn.lock
   checksum: feed17c4c209ea4fae0fadf8d4ea73bcd1a7b8b7600119e61ff3168824358a62
 version: "1.0"
