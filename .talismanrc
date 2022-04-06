@@ -1,0 +1,12 @@
+fileignoreconfig:
+- filename: backend/src/controller/sand-stone-samples/multi-assignee.ts
+  checksum: 3ea366efac1a4fd29b41e56d46caaeccd22ae28e39ebd26300da549039dc352d
+- filename: backend/src/controller/sand-stone-samples/multi-assignee2.ts
+  checksum: f66d0a0f3ff444013ee8914436c299249e0f8480b2b76bcb9cd68db62a3e617d
+- filename: backend/src/controller/sand-stone-samples/normal.ts
+  checksum: 2b8b3eca085740a99526e729ad6005d72d91c620c04aba5028770823f39d0a77
+- filename: backend/src/controller/sand-stone-samples/reopen-not-done.ts
+  checksum: 9a08119f54244dc3b0174fee97c3748da9d2a51e7a26fbf2f62f929102a98ca3
+- filename: backend/yarn.lock
+  checksum: feed17c4c209ea4fae0fadf8d4ea73bcd1a7b8b7600119e61ff3168824358a62
+version: "1.0"
