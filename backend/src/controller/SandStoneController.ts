@@ -21,7 +21,7 @@ import { REOPEN_NOT_DONE } from "./sand-stone-samples/reopen-not-done";
 import { writeFile } from "fs";
 import { resolve } from "path";
 
-const histories = MULTI_ASSIGNEE.changelog.histories;
+// const histories = MULTI_ASSIGNEE.changelog.histories;
 // const histories = MULTI_ASSIGNEE2.changelog.histories;
 // const histories = NORMAL.changelog.histories;
 // const histories = REOPEN_NOT_DONE.changelog.histories;
@@ -47,34 +47,18 @@ export default class SandStoneController {
       reopenRate: number;
     }[] = [];
 
-    /*
-                                                const issues = await new PrivateJira().getIssues(sandStoneReportModel.jql);
-                                                issues.forEach((issue, index) => {
-                                                      res.push({
-                                                        id: index, // issue.id
-                                                        assigneesWithCycleTime: new PrivateJira().getAssigneesWithCycleTime(
-                                                          issue.changelog.histories
-                                                        ),
-                                                        reopenRate: new PrivateJira().getReopenRate(issue.changelog.histories),
-                                                      });
-                                                    });*/
-    res.push({
-      id: 0, // issue.id
-      assigneesWithCycleTime: new PrivateJira().getAssigneesWithCycleTime(
-        histories
-      ),
-      reopenRate: new PrivateJira().getReopenRate(histories),
-    });
-    res.push({
-      id: 0, // issue.id
-      assigneesWithCycleTime: new PrivateJira().getAssigneesWithCycleTime(
-        histories
-      ),
-      reopenRate: new PrivateJira().getReopenRate(histories),
+    const issues = await new PrivateJira().getIssues(sandStoneReportModel.jql);
+    issues.forEach((issue, index) => {
+      res.push({
+        id: index, // issue.id
+        assigneesWithCycleTime: new PrivateJira().getAssigneesWithCycleTime(
+          issue.changelog.histories
+        ),
+        reopenRate: new PrivateJira().getReopenRate(issue.changelog.histories),
+      });
     });
 
     const path = resolve(__dirname, "./sand-stone-output/output.csv");
-    console.log(path);
 
     let csvFormatOutput = "";
     res.forEach((cardInfo) => {
