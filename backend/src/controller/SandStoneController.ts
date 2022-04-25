@@ -39,6 +39,7 @@ export default class SandStoneController {
 
     const res: {
       id: string | number;
+      key: string;
       assigneesWithCycleTime: {
         userId: string;
         name: string | null;
@@ -50,7 +51,8 @@ export default class SandStoneController {
     const issues = await new PrivateJira().getIssues(sandStoneReportModel.jql);
     issues.forEach((issue, index) => {
       res.push({
-        id: index, // issue.id
+        id: issue.fields.summary, // issue.id
+        key: issue.key,
         assigneesWithCycleTime: new PrivateJira().getAssigneesWithCycleTime(
           issue.changelog.histories
         ),
@@ -63,7 +65,9 @@ export default class SandStoneController {
     let csvFormatOutput = "";
     res.forEach((cardInfo) => {
       let tmpStr: string;
-      tmpStr = `card:,${cardInfo.id}\r\n`;
+      tmpStr = `${cardInfo.key},${cardInfo.id
+        .toString()
+        .replace(/\,/g, "-")}\r\n`;
       tmpStr = tmpStr + `reopenRate:,${cardInfo.reopenRate}\r\n`;
       tmpStr = tmpStr + "userId,name,Open,In Progress,For Review,UnderQA\r\n";
       cardInfo.assigneesWithCycleTime.forEach((assigneeCycleTimeInfo) => {
@@ -74,6 +78,8 @@ export default class SandStoneController {
       csvFormatOutput = csvFormatOutput + tmpStr + "\r\n";
     });
 
+    console.log(path);
+
     writeFile(
       path,
       csvFormatOutput,
@@ -81,6 +87,7 @@ export default class SandStoneController {
         encoding: "utf-8",
       },
       (err) => {
+        console.log(err);
         return null;
       }
     );

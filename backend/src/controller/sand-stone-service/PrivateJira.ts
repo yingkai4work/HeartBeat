@@ -192,14 +192,23 @@ export class PrivateJira {
 
   async getIssues(
     jql: string
-  ): Promise<{ changelog: { histories: History[] } }[]> {
-    const res = await axios.get(jql, {
-      // const res = (await axios.get("https://jira.sandstone.com.au/rest/api/2/search?jql=id=UECSUP-8059&expand=changelog",  {
-      auth: {
-        username: "user",
-        password: "password",
-      },
-    });
+  ): Promise<
+    {
+      key: string;
+      fields: { summary: string };
+      changelog: { histories: History[] };
+    }[]
+  > {
+    const res = await axios.get(
+      "https://jira.sandstone.com.au/rest/api/2/search?jql=project=UECSUP&expand=changelog",
+      {
+        // const res = (await axios.get("https://jira.sandstone.com.au/rest/api/2/search?jql=id=UECSUP-8059&expand=changelog",  {
+        auth: {
+          username: "",
+          password: "",
+        },
+      }
+    );
 
     // return res.data.issues[0].changelog.histories;
     return res.data.issues;
